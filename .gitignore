@@ -1,5 +1,8 @@
 ./*.cpp
-./build/*
-!./build/*.sh
-./*
-!./*.*
+
+!build/
+!build/*.sh
+build/*
+
+/*
+!/*.*
