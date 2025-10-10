@@ -1,0 +1,12 @@
+{
+    "configurations": [{
+        "name": "Linux",
+        "includePath": 
+        [
+            "/home/tahsin/C++Libs/poly2tri",
+            "/home/tahsin/C++Libs/Clipper2/CPP/Clipper2Lib/include",
+            "/usr/include"
+        ]
+    }],
+    "version": 4
+}

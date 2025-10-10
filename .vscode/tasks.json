@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: clang++ etkin dosyayı derle",
+			"command": "/usr/bin/clang++",
+			"args": [
+				"-fcolor-diagnostics",
+				"-fansi-escape-codes",
+				"-I/usr/include",
+				"-I/home/tahsin/C++Libs/poly2tri",
+				"-I/home/tahsin/C++Libs/Clipper2/CPP/Clipper2Lib/include",
+				"-I/home/tahsin/C++Libs/glfw/include",
+				"-g",
+				"${file}",
+				"-o",
+				"${fileDirname}/${fileBasenameNoExtension}",
+				"-lglfw",
+				"-lGL",
+				"-lGLEW",
+				"./build/libgpp.a"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "derleyici: /usr/bin/clang++"
+		}
+	]
+}
