@@ -11,6 +11,7 @@ struct DrawData
     GLuint vbo;
     GLuint ebo;
     GLsizei element_count;
+    GLenum drawType = GL_TRIANGLES;
 
     void Bind();
     void Unbind();

@@ -11,5 +11,5 @@ void DrawData::Unbind()
 void DrawData::Draw()
 {
     Bind();
-    glDrawElements(GL_TRIANGLES, element_count, GL_UNSIGNED_INT, 0);
+    glDrawElements(drawType, element_count, GL_UNSIGNED_INT, 0);
 }

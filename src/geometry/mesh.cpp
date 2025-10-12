@@ -62,7 +62,6 @@ void Mesh::GenerateDrawData()
 
     vertexData = new float[data.size()];
     std::copy(data.begin(), data.end(), vertexData);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
     drawData.element_count = static_cast<GLsizei>(indices.size());
 
