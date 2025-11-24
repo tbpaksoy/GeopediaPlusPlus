@@ -1,12 +1,23 @@
 {
-    "configurations": [{
-        "name": "Linux",
-        "includePath": 
-        [
-            "/home/tahsin/C++Libs/poly2tri",
-            "/home/tahsin/C++Libs/Clipper2/CPP/Clipper2Lib/include",
-            "/usr/include"
-        ]
-    }],
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/tahsin/C++Libs/poly2tri",
+                "/home/tahsin/C++Libs/Clipper2/CPP/Clipper2Lib/include",
+                "/usr/include"
+            ]
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "C:\\CPP Libs\\poly2tri",
+                "C:\\CPP Libs\\Clipper2\\Clipper2Lib\\include",
+                "C:\\CPP Libs\\glfw-3.3.8\\glfw-3.3.8\\include",
+                "C:\\CPP Libs\\glew-2.1.0-win32\\glew-2.1.0\\include",
+                "C:\\CPP Libs\\glm"
+            ]
+        }
+    ],
     "version": 4
 }

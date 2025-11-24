@@ -1,7 +1,9 @@
-
+/build/*
 !/build/
 !/build/*.sh
-/build/*
+!/build/*.cmd
 
 *test*
 *test*.cpp
+
+*.dll
