@@ -1,3 +1,5 @@
+//This file is used to configure include paths for C/C++ IntelliSense in VSCode.
+//If you are using in your own project, make sure to adjust the paths accordingly.
 {
     "configurations": [
         {
