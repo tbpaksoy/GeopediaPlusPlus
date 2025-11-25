@@ -4,10 +4,9 @@
 
 #include <GL/glew.h>
 
-
-Window::Window(glm::ivec2 size, const std::string& title)
+Window::Window(glm::ivec2 size, const std::string &title)
 {
-    if(!glfwInit())
+    if (!glfwInit())
     {
         throw std::runtime_error("Failed to initialize GLFW");
     }
@@ -19,17 +18,16 @@ Window::Window(glm::ivec2 size, const std::string& title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr); 
+    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
 
-    if(!window)
+    if (!window)
     {
         glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window");
     }
     glfwMakeContextCurrent(window);
 
-
-    if(glewInit() != GLEW_OK)
+    if (glewInit() != GLEW_OK)
     {
         throw std::runtime_error("Failed to initialize GLEW");
     }
@@ -53,6 +51,61 @@ glm::ivec2 Window::Position() const
     return glm::ivec2(x, y);
 }
 
+glm::vec2 Window::CursorPosition() const
+{
+    double x, y;
+    glfwGetCursorPos(window, &x, &y);
+    return glm::vec2(static_cast<float>(x), static_cast<float>(y));
+}
+
+glm::vec3 Window::ScreenToWorldRayPerspective(const Camera3D &camera) const
+{
+    glm::vec2 cursorPos = CursorPosition();
+    glm::ivec2 windowSize = Size();
+
+    glm::vec2 ndc = glm::vec2(
+        (2.0f * cursorPos.x) / windowSize.x - 1.0f,
+        1.0f - (2.0f * cursorPos.y) / windowSize.y);
+
+    glm::vec4 clipNear = glm::vec4(ndc, -1.0f, 1.0f),
+              clipFar = glm::vec4(ndc, 1.0f, 1.0f);
+
+    glm::mat4 invProjection = glm::inverse(camera.GetPerspectiveMatrix()),
+              invView = glm::inverse(camera.GetViewMatrix());
+
+    glm::vec4 viewNear = invProjection * clipNear;
+    viewNear /= viewNear.w;
+    glm::vec3 worldNear = glm::vec3(invView * viewNear);
+
+    glm::vec4 viewFar = invProjection * clipFar;
+    viewFar /= viewFar.w;
+    glm::vec3 worldFar = glm::vec3(invView * viewFar);
+
+    glm::vec3 direction = worldFar - worldNear;
+
+    return glm::normalize(direction);
+}
+glm::vec3 Window::ScreenToWorldRayOrthographic(const Camera3D &camera) const
+{
+    glm::vec2 cursorPos = CursorPosition();
+    glm::ivec2 windowSize = Size();
+
+    glm::vec2 ndc = glm::vec2(
+        (2.0f * cursorPos.x) / windowSize.x - 1.0f,
+        1.0f - (2.0f * cursorPos.y) / windowSize.y);
+
+    glm::vec4 clip = glm::vec4(ndc, 0.0f, 1.0f);
+    glm::mat4 invProjection = glm::inverse(camera.GetOrthographicMatrix()),
+              invView = glm::inverse(camera.GetViewMatrix());
+
+    glm::vec4 world = invView * (invProjection * clip);
+
+    glm::vec3 origin = glm::vec3(world),
+              direction = glm::normalize(camera.Front());
+
+    return direction;
+}
+
 void Window::SetSize(glm::ivec2 size)
 {
     this->size = size;
@@ -62,7 +115,7 @@ void Window::SetPosition(glm::ivec2 position)
 {
     glfwSetWindowPos(window, position.x, position.y);
 }
-void Window::SetTitle(const std::string& title)
+void Window::SetTitle(const std::string &title)
 {
     this->title = std::string(title.begin(), title.end());
     glfwSetWindowTitle(window, this->title.c_str());
@@ -70,7 +123,7 @@ void Window::SetTitle(const std::string& title)
 
 void Window::Run()
 {
-    while(!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window))
     {
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -78,7 +131,7 @@ void Window::Run()
         float currentFrameTime = glfwGetTime();
         float deltaTime = currentFrameTime - lastFrameTime;
         lastFrameTime = currentFrameTime;
-        if(updateCallback)
+        if (updateCallback)
             updateCallback(deltaTime);
     }
 }
@@ -87,7 +140,7 @@ void Window::ForceClose()
     glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void Window::SetUpdateCallback(const std::function<void(float)>& callback)
+void Window::SetUpdateCallback(const std::function<void(float)> &callback)
 {
     updateCallback = callback;
 }
