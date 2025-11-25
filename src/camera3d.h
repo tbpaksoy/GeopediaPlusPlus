@@ -17,7 +17,7 @@ public:
 
     glm::mat4 GetViewMatrix() const;
     glm::mat4 GetPerspectiveMatrix() const;
-    glm::mat4 GetOrtographicMatrix() const;
+    glm::mat4 GetOrthographicMatrix() const;
     glm::mat4 GetModelMatrix() const;
 
     void SetPerspective(float fov, float aspect, float near, float far);

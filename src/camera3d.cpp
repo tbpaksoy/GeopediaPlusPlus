@@ -15,7 +15,7 @@ glm::mat4 Camera3D::GetPerspectiveMatrix() const
 {
     return glm::perspective(glm::radians(fov), aspect, pNear, pFar);
 }
-glm::mat4 Camera3D::GetOrtographicMatrix() const
+glm::mat4 Camera3D::GetOrthographicMatrix() const
 {
     return glm::ortho(left, right, bottom, top, oNear, oFar);
 }
