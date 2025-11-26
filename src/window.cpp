@@ -19,6 +19,7 @@ Window::Window(glm::ivec2 size, const std::string &title)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+    glfwSetWindowUserPointer(window, this);
 
     if (!window)
     {
@@ -143,4 +144,17 @@ void Window::ForceClose()
 void Window::SetUpdateCallback(const std::function<void(float)> &callback)
 {
     updateCallback = callback;
+}
+void Window::SetMouseButtonCallback(const std::function<void(int, int, int)> &callback)
+{
+    mouseButtonCallback = callback;
+    glfwSetMouseButtonCallback(window,
+                               [](GLFWwindow *win, int button, int action, int mods)
+                               {
+                                   Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
+                                   if (windowInstance)
+                                   {
+                                       windowInstance->mouseButtonCallback(button, action, mods);
+                                   }
+                               });
 }

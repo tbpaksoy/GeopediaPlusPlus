@@ -18,6 +18,7 @@ private:
     glm::ivec2 size;
     std::string title;
     std::function<void(float)> updateCallback;
+    std::function<void(int, int, int)> mouseButtonCallback;
     float lastFrameTime;
 
 public:
@@ -36,6 +37,7 @@ public:
     void SetPosition(glm::ivec2 position);
     void SetTitle(const std::string &title);
 
+    void SetMouseButtonCallback(const std::function<void(int, int, int)> &callback);
     void SetUpdateCallback(const std::function<void(float)> &callback);
 
     void Run();
