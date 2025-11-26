@@ -2,21 +2,22 @@
 
 #include <GL/glew.h>
 
+#include <numeric>
 
 Mesh::Mesh() {}
-Mesh::Mesh(const std::vector<glm::vec3>& vertices, const std::vector<unsigned int>& indices)
+Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
     : vertices(vertices), indices(indices) {}
 Mesh::~Mesh() {}
 
-DrawData& Mesh::GetDrawData() 
+DrawData &Mesh::GetDrawData()
 {
     return drawData;
 }
-std::vector<glm::vec3>& Mesh::Vertices() 
+std::vector<Vertex> &Mesh::Vertices()
 {
     return vertices;
 }
-std::vector<unsigned int>& Mesh::Indices()  
+std::vector<unsigned int> &Mesh::Indices()
 {
     return indices;
 }
@@ -24,7 +25,6 @@ size_t Mesh::VertexSize() const
 {
     return vertexSize;
 }
-
 
 void Mesh::GenerateDrawData() 
 {
@@ -38,25 +38,45 @@ void Mesh::GenerateDrawData()
     drawData.ebo = ebo;
 
     glBindVertexArray(vao);
-    float* vertexData;
+    float *vertexData;
     std::vector<float> data;
-    if(vertexDataGenerator)
+    if (vertexDataGenerator)
     {
-        for(glm::vec3& vertex : vertices)
+        for (const auto &vertex : vertices)
         {
             unsigned int count = 0;
-            float* generatedData = vertexDataGenerator(count, vertex);
+            float *generatedData = vertexDataGenerator(count, vertex);
             data.insert(data.end(), generatedData, generatedData + count);
             delete[] generatedData;
         }
     }
     else
     {
-        for (const glm::vec3& v : vertices)
+        for (const auto &v : vertices)
         {
-            data.push_back(v.x);
-            data.push_back(v.y);
-            data.push_back(v.z);
+            if (std::holds_alternative<float>(v))
+                data.push_back(std::get<float>(v));
+            else if (std::holds_alternative<glm::vec2>(v))
+            {
+                glm::vec2 vec = std::get<glm::vec2>(v);
+                data.push_back(vec.x);
+                data.push_back(vec.y);
+            }
+            else if (std::holds_alternative<glm::vec3>(v))
+            {
+                glm::vec3 vec = std::get<glm::vec3>(v);
+                data.push_back(vec.x);
+                data.push_back(vec.y);
+                data.push_back(vec.z);
+            }
+            else if (std::holds_alternative<glm::vec4>(v))
+        {
+                glm::vec4 vec = std::get<glm::vec4>(v);
+                data.push_back(vec.x);
+                data.push_back(vec.y);
+                data.push_back(vec.z);
+                data.push_back(vec.w);
+            }
         }
     }
 
@@ -77,16 +97,16 @@ void Mesh::Draw()
     drawData.Unbind();
 }
 
-void Mesh::SetVertices(const std::vector<glm::vec3>& vertices) 
+void Mesh::SetVertices(const std::vector<Vertex> &vertices)
 {
     this->vertices = vertices;
 }
-void Mesh::SetIndices(const std::vector<unsigned int>& indices)
+void Mesh::SetIndices(const std::vector<unsigned int> &indices)
 {
     this->indices = indices;
 }
 
-void Mesh::SetVertexDataGenerator(const std::function<float*(unsigned int&, glm::vec3&)>& generator) 
+void Mesh::SetVertexDataGenerator(const std::function<float *(unsigned int &, const Vertex &)> &generator)
 {
     this->vertexDataGenerator = generator;
 }

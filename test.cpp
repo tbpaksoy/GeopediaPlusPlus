@@ -22,11 +22,12 @@ int main()
                           {0, 1, 2});
     mesh->SetVertexSize(6);
     srand((unsigned int)time(nullptr));
-    mesh->SetVertexDataGenerator([](unsigned int &vertexSize, glm::vec3 &vertex) -> float *
+    mesh->SetVertexDataGenerator([](unsigned int &vertexSize, const Vertex &vertex) -> float *
                                  {
         vertexSize = 6;
+        glm::vec3 v = std::get<glm::vec3>(vertex);
         return new float[6] {
-            vertex.x, vertex.y, vertex.z,
+            v.x, v.y, v.z,
             randf(), randf(), randf()
         }; });
     mesh->GenerateDrawData();
