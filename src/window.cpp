@@ -4,6 +4,12 @@
 
 #include <GL/glew.h>
 
+#ifdef IMGUI
+#include <backends/imgui_impl_opengl3.h>
+#include <backends/imgui_impl_glfw.h>
+#include <imgui.h>
+#endif
+
 Window::Window(glm::ivec2 size, const std::string &title)
 {
     if (!glfwInit())
@@ -34,6 +40,13 @@ Window::Window(glm::ivec2 size, const std::string &title)
     }
 
     glfwMakeContextCurrent(window);
+
+#ifdef IMGUI
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+    ImGui::StyleColorsDark();
+#endif
 }
 Window::~Window()
 {

@@ -37,8 +37,8 @@ public:
     void SetPosition(glm::ivec2 position);
     void SetTitle(const std::string &title);
 
-    void SetMouseButtonCallback(const std::function<void(int, int, int)> &callback);
     void SetUpdateCallback(const std::function<void(float)> &callback);
+    void SetMouseButtonCallback(const std::function<void(int, int, int)> &callback);
 
     void Run();
     void ForceClose();

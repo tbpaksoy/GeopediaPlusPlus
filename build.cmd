@@ -3,11 +3,24 @@ setlocal enabledelayedexpansion
 
 REM --- check if build/build.cmd exists ---
 
+set build_args=
+set build_defs=
+
+if "%1" == "imgui" (
+        set build_defs=%build_defs% -DIMGUI
+        set build_args=%build_args% imgui
+)
+
+if not exist build (
+        echo Error: build directory not found.
+        exit /b 1
+)
+
 cd build
 
 if exist "build.cmd" (
         echo Running build\build.cmd
-        call "build.cmd" %*
+        call "build.cmd" %build_args%
 ) else (
         echo Error: build\build.cmd not found.
         exit /b 1
@@ -22,12 +35,19 @@ set includes[2]=C:\CPP Libs\glfw-3.3.8\glfw-3.3.8\include
 set includes[3]=C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\include
 set includes[4]=C:\CPP Libs\glm
 
+set last_include_index=4
+
+if "%1" == "imgui" (
+    set includes[5]=C:\CPP Libs\imgui
+    set /a last_include_index+=1
+)
+
 set GLFW=-L"C:\CPP Libs\glfw-3.3.8.bin.WIN64\lib-mingw-w64" -lglfw3
 set GLEW=-L"C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\bin\Release\x64" -lglew32
 
 set include_args=
 
-for /l %%i in (0,1,4) do (
+for /l %%i in (0,1,%last_include_index%) do (
     set include_args=!include_args! -I"!includes[%%i]!"
 )
 
@@ -37,6 +57,6 @@ REM --- Compile source files ---
 for %%f in (*.cpp) do (
         set fname=%%~nf
     echo Compiling %%f -> !fname!.exe
-        clang++ -g !include_args! %%f -o !fname!.exe !GLFW! -lopengl32 !GLEW! libgpp.dll
+        clang++ -g !include_args! !build_defs! %%f -o !fname!.exe !GLFW! -lopengl32 !GLEW! libgpp.dll
 
 )
