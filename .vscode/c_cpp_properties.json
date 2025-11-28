@@ -1,5 +1,14 @@
 //This file is used to configure include paths for C/C++ IntelliSense in VSCode.
 //If you are using in your own project, make sure to adjust the paths accordingly.
+/*
+Required Libraries:
+- poly2tri
+- Clipper2
+- glfw
+- glew
+- glm
+- imgui
+*/
 {
     "configurations": [
         {
@@ -17,7 +26,10 @@
                 "C:\\CPP Libs\\Clipper2\\Clipper2Lib\\include",
                 "C:\\CPP Libs\\glfw-3.3.8\\glfw-3.3.8\\include",
                 "C:\\CPP Libs\\glew-2.1.0-win32\\glew-2.1.0\\include",
-                "C:\\CPP Libs\\glm"
+                "C:\\CPP Libs\\glm",
+                "C:\\CPP Libs\\imgui-1.90.4",
+                "C:\\CPP Libs\\simdjson\\singleheader",
+                "C:\\CPP Libs\\CXXGraph\\include"
             ]
         }
     ],

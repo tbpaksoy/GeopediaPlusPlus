@@ -12,8 +12,10 @@ set INC4=C:\CPP Libs\glfw-3.3.8\glfw-3.3.8\include
 set INC5=C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\include
 set INC6=C:\CPP Libs\glm
 set INC7=C:\CPP Libs\imgui-1.90.4
+set INC8=C:\CPP Libs\simdjson\singleheader
+set INC9=C:\CPP Libs\CXXGraph\include
 
-set args=-I"%INC1%" -I"%INC2%" -I"%INC3%" -I"%INC4%" -I"%INC5%" -I"%INC6%"
+set args=-I"%INC1%" -I"%INC2%" -I"%INC3%" -I"%INC4%" -I"%INC5%" -I"%INC6%" -I"%INC8%" -I"%INC9%"
 
 set GLFW=-L"C:\CPP Libs\glfw-3.3.8.bin.WIN64\lib-mingw-w64" -lglfw3
 set GLEW=-L"C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\bin\Release\x64" -lglew32
@@ -24,6 +26,8 @@ for /r "%INC2%\poly2tri" %%f in (*.cc) do (
     echo Compiling %%f
     clang++ -std=c++17 -g -c -I"%INC2%" "%%f" -o "obj\%%~nf.o"
 )
+
+    clang++ -std=c++17 -g -c -I"%INC8%" "%INC8%\simdjson.cpp" -o "obj\simdjson.o"
 
 if "%1"=="imgui" (
     set build_defs=%build_defs% -DIMGUI
