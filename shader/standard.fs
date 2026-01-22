@@ -26,7 +26,7 @@ void main()
             float dist = distance(FragPos, lights[i].position);
             if (dist < lights[i].radius) 
             {
-                light += lights[i].intensity * (1.0 - (dist / lights[i].radius));
+                light += lights[i].intensity / (dist * dist);
             }
         }
         fragColor = vec4(Color * light, 1.0);
