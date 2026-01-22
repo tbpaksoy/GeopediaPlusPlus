@@ -13,7 +13,7 @@
 
 typedef std::variant<float, glm::vec2, glm::vec3, glm::vec4> Vertex;
 
-class Mesh : public Object3D 
+class Mesh : public Object3D
 {
 private:
     DrawData drawData;
@@ -21,6 +21,9 @@ private:
     std::vector<unsigned int> indices;
     std::function<float *(unsigned int &, const Vertex &)> vertexDataGenerator;
     size_t vertexSize = 3 * sizeof(float);
+
+    float *vertexBufferArray = nullptr;
+    unsigned int *indexBufferArray = nullptr;
 
 public:
     Mesh();
@@ -33,8 +36,10 @@ public:
     size_t VertexSize() const;
 
     void GenerateDrawData();
+    void DeleteDrawData();
+    void UpdateDrawData();
     void Draw();
-    
+
     void SetVertices(const std::vector<Vertex> &vertices);
     void SetIndices(const std::vector<unsigned int> &indices);
 

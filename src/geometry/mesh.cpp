@@ -26,7 +26,7 @@ size_t Mesh::VertexSize() const
     return vertexSize;
 }
 
-void Mesh::GenerateDrawData() 
+void Mesh::GenerateDrawData()
 {
     GLuint vao, vbo, ebo;
     glGenVertexArrays(1, &vao);
@@ -70,7 +70,7 @@ void Mesh::GenerateDrawData()
                 data.push_back(vec.z);
             }
             else if (std::holds_alternative<glm::vec4>(v))
-        {
+            {
                 glm::vec4 vec = std::get<glm::vec4>(v);
                 data.push_back(vec.x);
                 data.push_back(vec.y);
@@ -90,7 +90,23 @@ void Mesh::GenerateDrawData()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices.front(), GL_STATIC_DRAW);
 }
-void Mesh::Draw() 
+void Mesh::DeleteDrawData()
+{
+    glDeleteVertexArrays(1, &drawData.vao);
+    glDeleteBuffers(1, &drawData.vbo);
+    glDeleteBuffers(1, &drawData.ebo);
+    if (vertexBufferArray)
+    {
+        delete[] vertexBufferArray;
+        vertexBufferArray = nullptr;
+    }
+    if (indexBufferArray)
+    {
+        delete[] indexBufferArray;
+        indexBufferArray = nullptr;
+    }
+}
+void Mesh::Draw()
 {
     drawData.Bind();
     drawData.Draw();
