@@ -46,6 +46,12 @@ Window::Window(glm::ivec2 size, const std::string &title)
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     ImGui::StyleColorsDark();
+
+    ImFontConfig config;
+    ImGuiIO &io = ImGui::GetIO();
+    ImWchar ranges[] = {0x0020, 0x00FF, 0x0100, 0x024F, 0x0400, 0x04FF, 0x0370, 0x03FF, 0x0600, 0x06FF, 0x0590, 0x05FF, 0};
+    io.Fonts->AddFontFromFileTTF("fonts\\PlusJakartaSans-Regular.ttf", 16.0f, &config, ranges);
+    io.Fonts->Build();
 #endif
 }
 Window::~Window()

@@ -33,5 +33,8 @@ public:
     void Rotate(const glm::quat &delta);
     void Rescale(const glm::vec3 &factor);
     void LookAt(const glm::vec3 &point);
+#ifdef IMGUI
+    bool DrawGUI() override;
+#endif
 };
 #endif

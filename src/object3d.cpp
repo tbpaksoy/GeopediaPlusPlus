@@ -71,3 +71,16 @@ void Object3D::LookAt(const glm::vec3 &point)
             glm::inverse(
                 glm::lookAt(position, point, glm::vec3(0, 1, 0)))));
 }
+
+#ifdef IMGUI
+bool Object3D::DrawGUI()
+{
+    bool changed = Object::DrawGUI();
+
+    changed |= ImGui::InputFloat3("Position", &position[0]);
+    changed |= ImGui::InputFloat3("Rotation", &rotation[0]);
+    changed |= ImGui::InputFloat3("Scale", &scale[0]);
+
+    return changed;
+}
+#endif

@@ -44,5 +44,9 @@ public:
     float TopLimit() const;
     float Near() const;
     float Far() const;
+
+#ifdef IMGUI
+    bool DrawGUI() override;
+#endif
 };
 #endif

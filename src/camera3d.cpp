@@ -127,3 +127,36 @@ float Camera3D::Far() const
 {
     return oFar;
 }
+
+#ifdef IMGUI
+bool Camera3D::DrawGUI()
+{
+    bool changed = Object3D::DrawGUI();
+    if (ImGui::BeginTabBar("Camera Settings"))
+    {
+        if (ImGui::BeginTabItem("Perspective Settings"))
+        {
+            changed |= ImGui::InputFloat("Field of View", &fov);
+            changed |= ImGui::InputFloat("Near", &pNear);
+            changed |= ImGui::InputFloat("Far", &pFar);
+            changed |= ImGui::InputFloat("Aspect", &aspect);
+
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Orthograhic Settings"))
+        {
+            changed |= ImGui::InputFloat("Left Plane", &left);
+            changed |= ImGui::InputFloat("Right Plane", &right);
+            changed |= ImGui::InputFloat("Bottom Plane", &bottom);
+            changed |= ImGui::InputFloat("Top Plane", &top);
+            changed |= ImGui::InputFloat("Near Plane", &oNear);
+            changed |= ImGui::InputFloat("Far Plane", &oFar);
+
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
+    return changed;
+}
+#endif

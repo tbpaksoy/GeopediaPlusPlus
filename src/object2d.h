@@ -10,18 +10,22 @@ private:
     glm::vec2 position;
     float rotation;
     glm::vec2 scale;
-public:
 
+public:
     glm::vec2 Position() const;
     float Rotation() const;
     glm::vec2 Scale() const;
 
-    void SetPosition(const glm::vec2& pos);
+    void SetPosition(const glm::vec2 &pos);
     void SetRotation(float rot);
-    void SetScale(const glm::vec2& scl);
+    void SetScale(const glm::vec2 &scl);
 
-    void Translate(const glm::vec2& delta);
+    void Translate(const glm::vec2 &delta);
     void Rotate(float delta);
-    void Rescale(const glm::vec2& factor);
+    void Rescale(const glm::vec2 &factor);
+
+#ifdef IMGUI
+    virtual DrawGUI() override;
+#endif
 };
 #endif
