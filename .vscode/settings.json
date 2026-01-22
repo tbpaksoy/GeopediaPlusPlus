@@ -87,6 +87,7 @@
         "codecvt": "cpp",
         "__availability": "cpp",
         "filesystem": "cpp",
-        "version": "cpp"
+        "version": "cpp",
+        "simd": "cpp"
     }
 }

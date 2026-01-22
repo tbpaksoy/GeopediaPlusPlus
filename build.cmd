@@ -16,17 +16,15 @@ if not exist build (
         exit /b 1
 )
 
-cd build
 
-if exist "build.cmd" (
+if exist "build/build.cmd" (
         echo Running build\build.cmd
-        call "build.cmd" %build_args%
+        call "build/build.cmd" %build_args%
 ) else (
         echo Error: build\build.cmd not found.
         exit /b 1
 )
 
-cd ..
 
 REM --- include paths ---
 set includes[0]=C:\CPP Libs\poly2tri
