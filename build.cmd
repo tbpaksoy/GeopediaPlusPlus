@@ -34,8 +34,10 @@ set includes[3]=C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\include
 set includes[4]=C:\CPP Libs\glm
 set includes[5]=C:\CPP Libs\simdjson\singleheader
 set includes[6]=C:\CPP Libs\CXXGraph\include
+set includes[7]=C:\CPP Libs\tinyxml2-10.0.0
 
-set last_include_index=6
+
+set last_include_index=7
 
 if "%1" == "imgui" (
 

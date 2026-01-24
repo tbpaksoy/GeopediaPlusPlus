@@ -14,8 +14,9 @@ set INC6=C:\CPP Libs\glm
 set INC7=C:\CPP Libs\imgui-1.90.4
 set INC8=C:\CPP Libs\simdjson\singleheader
 set INC9=C:\CPP Libs\CXXGraph\include
+set INC10=C:\CPP Libs\tinyxml2-10.0.0
 
-set args=-I"%INC1%" -I"%INC2%" -I"%INC3%" -I"%INC4%" -I"%INC5%" -I"%INC6%" -I"%INC8%" -I"%INC9%"
+set args=-I"%INC1%" -I"%INC2%" -I"%INC3%" -I"%INC4%" -I"%INC5%" -I"%INC6%" -I"%INC8%" -I"%INC9%" -I"%INC10%"
 
 set GLFW=-L"C:\CPP Libs\glfw-3.3.8.bin.WIN64\lib-mingw-w64" -lglfw3
 set GLEW=-L"C:\CPP Libs\glew-2.1.0-win32\glew-2.1.0\bin\Release\x64" -lglew32
