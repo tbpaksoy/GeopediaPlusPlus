@@ -30,7 +30,8 @@ Required Libraries:
                 "C:\\CPP Libs\\imgui-1.90.4",
                 "C:\\CPP Libs\\simdjson\\singleheader",
                 "C:\\CPP Libs\\CXXGraph\\include",
-                "C:\\CPP Libs\\tinyxml2-10.0.0"
+                "C:\\CPP Libs\\tinyxml2-10.0.0",
+                "C:\\CPP Libs\\rapidcsv\\src"
             ]
         }
     ],
