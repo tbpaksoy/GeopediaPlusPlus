@@ -83,6 +83,29 @@ std::map<std::string, std::string> ExtractData(const simdjson::dom::element &jso
         }
         else if (json.is_object())
         {
+                simdjson::dom::object obj = json.get_object();
+                for (auto key : keyMap)
+                {
+                        if (key.second.find("@element") == std::string::npos)
+                                continue;
+                        std::string elementPath = std::string(key.second.c_str());
+                        elementPath.replace(elementPath.find("@root/"), 6, "");
+                        elementPath.replace(elementPath.find("@element/"), 9, "");
+                        for (auto element : obj)
+                        {
+                                std::string value;
+
+                                if (element.value[elementPath].is_string())
+                                        value = std::string(element.value[elementPath].get_string().value());
+                                else if (element.value[elementPath].is_int64())
+                                        value = std::to_string((int)element.value[elementPath].get_int64());
+                                else if (element.value[elementPath].is_double())
+                                        value = std::to_string((float)element.value[elementPath].get_double());
+                                else if (element.value[elementPath].is_bool())
+                                        value = element.value[elementPath].get_bool() ? "true" : "false";
+                                data[std::string(element.key) + "/" + key.first] = value;
+                        }
+                }
         }
 
         return data;
