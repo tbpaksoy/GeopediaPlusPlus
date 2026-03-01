@@ -12,6 +12,7 @@ Polygon::Polygon(std::vector<glm::vec2> vertices)
 
 void Polygon::AddVertex(const glm::vec2 &vertex)
 {
+    if (std::find(vertices.begin(), vertices.end(), vertex) == vertices.end())
     vertices.push_back(vertex);
 }
 
