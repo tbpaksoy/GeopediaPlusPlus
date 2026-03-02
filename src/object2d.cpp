@@ -40,7 +40,7 @@ void Object2d::Rescale(const glm::vec2 &factor)
 }
 
 #ifdef IMGUI
-virtual bool Object2d::DrawGUI()
+bool Object2d::DrawGUI()
 {
     bool changed = Object::DrawGUI();
 

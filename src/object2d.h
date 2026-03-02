@@ -25,7 +25,7 @@ public:
     void Rescale(const glm::vec2 &factor);
 
 #ifdef IMGUI
-    virtual DrawGUI() override;
+    bool DrawGUI() override;
 #endif
 };
 #endif
