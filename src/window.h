@@ -19,6 +19,8 @@ private:
     std::string title;
     std::function<void(float)> updateCallback;
     std::function<void(int, int, int)> mouseButtonCallback;
+    std::function<void(int, int, int, int)> keyButtonCallback;
+    std::function<void(double, double)> scrollCallback;
     float lastFrameTime;
 
 public:
@@ -39,9 +41,14 @@ public:
 
     void SetUpdateCallback(const std::function<void(float)> &callback);
     void SetMouseButtonCallback(const std::function<void(int, int, int)> &callback);
+    void SetKeyCallback(const std::function<void(int, int, int, int)> &callback);
+    void SetScrollCallback(const std::function<void(double, double)> &callback);
 
     void Run();
     void ForceClose();
+
+    int GetMouseButtonState(int button) const;
+    int GetKeyState(int key) const;
 };
 
 #endif

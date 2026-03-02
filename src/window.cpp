@@ -177,3 +177,39 @@ void Window::SetMouseButtonCallback(const std::function<void(int, int, int)> &ca
                                    }
                                });
 }
+void Window::SetKeyCallback(const std::function<void(int, int, int, int)> &callback)
+{
+    keyButtonCallback = callback;
+    glfwSetKeyCallback(window,
+                       [](GLFWwindow *win, int key, int scancode, int action, int mods)
+                       {
+                           Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
+                           if (windowInstance)
+                           {
+                               windowInstance->keyButtonCallback(key, scancode, action, mods);
+                           }
+                       });
+}
+void Window::SetScrollCallback(const std::function<void(double, double)> &callback)
+{
+    scrollCallback = callback;
+    glfwSetScrollCallback(window,
+                          [](GLFWwindow *win, double xoffset, double yoffset)
+                          {
+                              Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
+                              if (windowInstance)
+                              {
+                                  windowInstance->scrollCallback(xoffset, yoffset);
+                              }
+                          });
+}
+
+int Window::GetMouseButtonState(int button) const
+{
+    return glfwGetMouseButton(window, button);
+}
+
+int Window::GetKeyState(int key) const
+{
+    return glfwGetKey(window, key);
+}
