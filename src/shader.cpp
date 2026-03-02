@@ -348,36 +348,43 @@ void Shader::Use()
 void Shader::Set(const char *name, float value)
 {
     glUniform1f(glGetUniformLocation(program, name), value);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, int value)
 {
     glUniform1i(glGetUniformLocation(program, name), value);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, const glm::vec2 &value)
 {
     glUniform2fv(glGetUniformLocation(program, name), 1, &value[0]);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, const glm::vec3 &value)
 {
     glUniform3fv(glGetUniformLocation(program, name), 1, &value[0]);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, const glm::vec4 &value)
 {
     glUniform4fv(glGetUniformLocation(program, name), 1, &value[0]);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, const glm::mat3 &value)
 {
     glUniformMatrix3fv(glGetUniformLocation(program, name), 1, GL_FALSE, &value[0][0]);
+    uniformMap[name] = value;
 }
 
 void Shader::Set(const char *name, const glm::mat4 &value)
 {
     glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, &value[0][0]);
+    uniformMap[name] = value;
 }
 
 void Shader::ActivateAttributeAndPointer(const char *name, GLint size, GLsizei stride, const void *pointer)
