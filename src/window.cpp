@@ -54,6 +54,55 @@ Window::Window(glm::ivec2 size, const std::string &title)
     io.Fonts->Build();
 #endif
 }
+Window::Window(glm::ivec2 size, const std::string &title, int msaa)
+{
+    if (!glfwInit())
+    {
+        throw std::runtime_error("Failed to initialize GLFW");
+    }
+
+    this->size = size;
+    this->title = title;
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    if (msaa)
+        glfwWindowHint(GLFW_SAMPLES, msaa);
+
+    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+    glfwSetWindowUserPointer(window, this);
+
+    if (!window)
+    {
+        glfwTerminate();
+        throw std::runtime_error("Failed to create GLFW window");
+    }
+    glfwMakeContextCurrent(window);
+
+    if (glewInit() != GLEW_OK)
+    {
+        throw std::runtime_error("Failed to initialize GLEW");
+    }
+
+    glfwMakeContextCurrent(window);
+
+    if (msaa)
+        glEnable(GL_MULTISAMPLE);
+
+#ifdef IMGUI
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+    ImGui::StyleColorsDark();
+
+    ImFontConfig config;
+    ImGuiIO &io = ImGui::GetIO();
+    ImWchar ranges[] = {0x0020, 0x00FF, 0x0100, 0x024F, 0x0400, 0x04FF, 0x0370, 0x03FF, 0x0600, 0x06FF, 0x0590, 0x05FF, 0};
+    io.Fonts->AddFontFromFileTTF("fonts\\PlusJakartaSans-Regular.ttf", 16.0f, &config, ranges);
+    io.Fonts->Build();
+#endif
+}
 Window::~Window()
 {
     glfwDestroyWindow(window);
@@ -130,6 +179,11 @@ void Window::SetSize(glm::ivec2 size)
 {
     this->size = size;
     glfwSetWindowSize(window, size.x, size.y);
+    glViewport(0, 0, size.x, size.y);
+}
+void Window::SetAspectRatio(glm::ivec2 ratio)
+{
+    glfwSetWindowAspectRatio(window, ratio.x, ratio.y);
 }
 void Window::SetPosition(glm::ivec2 position)
 {
@@ -183,6 +237,9 @@ void Window::SetMouseButtonCallback(const std::function<void(int, int, int)> &ca
     glfwSetMouseButtonCallback(window,
                                [](GLFWwindow *win, int button, int action, int mods)
                                {
+#ifdef IMGUI
+                                   ImGui_ImplGlfw_MouseButtonCallback(win, button, action, mods);
+#endif
                                    Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
                                    if (windowInstance)
                                    {
@@ -196,6 +253,10 @@ void Window::SetKeyCallback(const std::function<void(int, int, int, int)> &callb
     glfwSetKeyCallback(window,
                        [](GLFWwindow *win, int key, int scancode, int action, int mods)
                        {
+#ifdef IMGUI
+                           ImGui_ImplGlfw_KeyCallback(win, key, scancode, action, mods);
+#endif
+
                            Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
                            if (windowInstance)
                            {
@@ -209,6 +270,9 @@ void Window::SetScrollCallback(const std::function<void(double, double)> &callba
     glfwSetScrollCallback(window,
                           [](GLFWwindow *win, double xoffset, double yoffset)
                           {
+#ifdef IMGUI
+                              ImGui_ImplGlfw_ScrollCallback(win, xoffset, yoffset);
+#endif
                               Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
                               if (windowInstance)
                               {

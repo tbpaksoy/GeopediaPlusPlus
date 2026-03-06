@@ -21,10 +21,13 @@ private:
     std::function<void(int, int, int)> mouseButtonCallback;
     std::function<void(int, int, int, int)> keyButtonCallback;
     std::function<void(double, double)> scrollCallback;
+    std::function<void(int, int)> setWindowSizeCallback;
     float lastFrameTime;
+    int msaa = 0;
 
 public:
     Window(glm::ivec2 size, const std::string &title);
+    Window(glm::ivec2 size, const std::string &title, int msaa);
     ~Window();
 
     glm::ivec2 Size() const;
@@ -36,6 +39,7 @@ public:
     glm::vec3 ScreenToWorldRayOrthographic(const Camera3D &camera) const;
 
     void SetSize(glm::ivec2 size);
+    void SetAspectRatio(glm::ivec2 ratio);
     void SetPosition(glm::ivec2 position);
     void SetTitle(const std::string &title);
 
