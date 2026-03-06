@@ -160,6 +160,19 @@ void Window::ForceClose()
     glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+void Window::SetBlending(bool enabled)
+{
+    if (enabled)
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+    else
+    {
+        glDisable(GL_BLEND);
+    }
+}
+
 void Window::SetUpdateCallback(const std::function<void(float)> &callback)
 {
     updateCallback = callback;

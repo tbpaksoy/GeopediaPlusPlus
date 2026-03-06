@@ -47,6 +47,8 @@ public:
     void Run();
     void ForceClose();
 
+    void SetBlending(bool enabled);
+
     int GetMouseButtonState(int button) const;
     int GetKeyState(int key) const;
 };
