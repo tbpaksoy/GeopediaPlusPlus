@@ -43,6 +43,7 @@ public:
     void SetMouseButtonCallback(const std::function<void(int, int, int)> &callback);
     void SetKeyCallback(const std::function<void(int, int, int, int)> &callback);
     void SetScrollCallback(const std::function<void(double, double)> &callback);
+    void SetWindowSizeCallback(const std::function<void(int, int)> &callback);
 
     void Run();
     void ForceClose();

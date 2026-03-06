@@ -216,6 +216,19 @@ void Window::SetScrollCallback(const std::function<void(double, double)> &callba
                               }
                           });
 }
+void Window::SetWindowSizeCallback(const std::function<void(int, int)> &callback)
+{
+    setWindowSizeCallback = callback;
+    glfwSetWindowSizeCallback(window,
+                              [](GLFWwindow *win, int width, int height)
+                              {
+                                  Window *windowInstance = static_cast<Window *>(glfwGetWindowUserPointer(win));
+                                  if (windowInstance)
+                                  {
+                                      windowInstance->setWindowSizeCallback(width, height);
+                                  }
+                              });
+}
 
 int Window::GetMouseButtonState(int button) const
 {
