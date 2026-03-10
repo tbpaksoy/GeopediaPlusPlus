@@ -21,13 +21,14 @@ private:
     std::vector<unsigned int> indices;
     std::function<float *(unsigned int &, const Vertex &)> vertexDataGenerator;
     size_t vertexSize = 3 * sizeof(float);
-
     float *vertexBufferArray = nullptr;
     unsigned int *indexBufferArray = nullptr;
+    GLuint drawType = GL_TRIANGLES;
 
 public:
     Mesh();
     Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
+    Mesh(Mesh &other) = default;
     ~Mesh();
 
     DrawData &GetDrawData();
@@ -38,6 +39,7 @@ public:
     void GenerateDrawData();
     void DeleteDrawData();
     void UpdateDrawData();
+    void SetDrawType(GLuint drawType);
     void Draw();
 
     void SetVertices(const std::vector<Vertex> &vertices);

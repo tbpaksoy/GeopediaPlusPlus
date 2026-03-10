@@ -36,6 +36,7 @@ void Mesh::GenerateDrawData()
     drawData.vao = vao;
     drawData.vbo = vbo;
     drawData.ebo = ebo;
+    drawData.drawType = drawType;
 
     glBindVertexArray(vao);
     float *vertexData;
@@ -105,6 +106,10 @@ void Mesh::DeleteDrawData()
         delete[] indexBufferArray;
         indexBufferArray = nullptr;
     }
+}
+void Mesh::SetDrawType(GLuint drawType)
+{
+    this->drawType = drawType;
 }
 void Mesh::Draw()
 {
