@@ -36,9 +36,10 @@ set includes[5]=C:\CPP Libs\simdjson\singleheader
 set includes[6]=C:\CPP Libs\CXXGraph\include
 set includes[7]=C:\CPP Libs\tinyxml2-10.0.0
 set includes[8]=C:\CPP Libs\rapidcsv\src
+set includes[9]=C:\CPP Libs\stb
 
 
-set last_include_index=8
+set last_include_index=9
 
 if "%1" == "imgui" (
 

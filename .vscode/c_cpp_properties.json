@@ -31,7 +31,8 @@ Required Libraries:
                 "C:\\CPP Libs\\simdjson\\singleheader",
                 "C:\\CPP Libs\\CXXGraph\\include",
                 "C:\\CPP Libs\\tinyxml2-10.0.0",
-                "C:\\CPP Libs\\rapidcsv\\src"
+                "C:\\CPP Libs\\rapidcsv\\src",
+                "C:\\CPP Libs\\stb"
             ]
         }
     ],
