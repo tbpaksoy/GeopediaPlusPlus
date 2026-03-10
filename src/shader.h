@@ -56,6 +56,7 @@ public:
     void Use();
     void Set(const char *name, float value);
     void Set(const char *name, int value);
+    void Set(const char *name, unsigned int value);
     void Set(const char *name, const glm::vec2 &value);
     void Set(const char *name, const glm::vec3 &value);
     void Set(const char *name, const glm::vec4 &value);

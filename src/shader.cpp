@@ -357,6 +357,11 @@ void Shader::Set(const char *name, int value)
     uniformMap[name] = value;
 }
 
+void Shader::Set(const char *name, unsigned int value)
+{
+    glUniform1ui(glGetUniformLocation(program, name), value);
+}
+
 void Shader::Set(const char *name, const glm::vec2 &value)
 {
     glUniform2fv(glGetUniformLocation(program, name), 1, &value[0]);
